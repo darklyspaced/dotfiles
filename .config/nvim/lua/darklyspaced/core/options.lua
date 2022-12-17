@@ -1,5 +1,8 @@
 local opt = vim.opt
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- line numbers
 opt.relativenumber = true
 opt.number = true

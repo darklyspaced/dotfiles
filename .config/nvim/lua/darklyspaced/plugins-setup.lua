@@ -22,12 +22,16 @@ return packer.startup(function(use)
 	use("sainnhe/gruvbox-material") --colourscheme
 
 	use("numToStr/Comment.nvim") --help commenting gc + motion / c to do curr line
-
 	use("nvim-lua/plenary.nvim") -- useful lua functions
-
 	use("nvim-lualine/lualine.nvim") -- status line
-
 	use("ryanoasis/vim-devicons") -- nice icons
+	use({
+		"nvim-tree/nvim-tree.lua",
+		requires = {
+			"nvim-tree/nvim-web-devicons", -- optional, for file icons
+		},
+		tag = "nightly", -- optional, updated every week. (see issue #1193)
+	})
 
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) --fuzzy finding
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- enhances telescope
@@ -53,7 +57,7 @@ return packer.startup(function(use)
 	-- formatting & linting
 	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
-	use("MunifTanjim/prettier.nvim")
+	use("MunifTanjim/prettier.nvim") -- formatter for yes
 
 	--treesitter
 	use({
@@ -73,7 +77,17 @@ return packer.startup(function(use)
 	use("ggandor/leap.nvim") -- better vertical movement!
 
 	use("mfussenegger/nvim-dap") -- debugging
-	use("rcarriga/nvim-dap-ui") -- adds the
+	use("rcarriga/nvim-dap-ui") -- adds the ui for debugging
+
+	use({
+		"Pocco81/auto-save.nvim",
+		config = function()
+			require("auto-save").setup({
+				-- your config goes here
+				-- or just leave it empty :)
+			})
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()

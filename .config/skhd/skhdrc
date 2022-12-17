@@ -1,5 +1,3 @@
-hyper - b: open -n /Applications/Firefox.app
-
 ################################################################
 #                            YABAI                             #
 ################################################################
@@ -17,43 +15,41 @@ cmd - 9 : yabai -m query --spaces --space 9 | jq -r '.windows[0] // empty' | xar
 # Send window to space and focus that space
 shift + cmd - 1 : yabai -m window --space  1; yabai -m query --spaces --space 1 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
 shift + cmd - 2 : yabai -m window --space  2; yabai -m query --spaces --space 2 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-shift + cmd - 3 : yabai -m window --space  3; yabai -m query --spaces --space 3 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-# shift + cmd - 4 : yabai -m window --space  4; yabai -m query --spaces --space 4 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-shift + cmd - 5 : yabai -m window --space  5; yabai -m query --spaces --space 5 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-shift + cmd - 6 : yabai -m window --space  6; yabai -m query --spaces --space 6 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-shift + cmd - 7 : yabai -m window --space  7; yabai -m query --spaces --space 7 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
-shift + cmd - 8 : yabai -m window --space  8; yabai -m query --spaces --space 8 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
+shift + cmd - 3 : yabai -m window --space  3; yabai -m query --spaces --space 3 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus # shift + cmd - 4 : yabai -m window --space  4; yabai -m query --spaces --space 4 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus
+shift + cmd - 5 : yabai -m window --space  5; yabai -m query --spaces --space 5 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus 
+shift + cmd - 6 : yabai -m window --space  6; yabai -m query --spaces --space 6 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus 
+shift + cmd - 7 : yabai -m window --space  7; yabai -m query --spaces --space 7 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus 
+shift + cmd - 8 : yabai -m window --space  8; yabai -m query --spaces --space 8 | jq -r '.windows[0] // empty' | xargs yabai -m window --focus 
 
-alt - 1 : yabai -m display --focus 1
-alt - 2 : yabai -m display --focus 2
+alt - 1 : yabai -m display --focus 1 
+alt - 2 : yabai -m display --focus 2 
 
-alt - h : yabai -m window --resize left:-50:0 ; yabai -m window --resize right:-50:0
-alt - j : yabai -m window --resize bottom:0:50 ; yabai -m window --resize top:0:50
-alt - k : yabai -m window --resize top:0:-50 ; yabai -m window --resize bottom:0:-50
+alt + shift - 1: yabai -m window --display 1
+alt + shift - 2: yabai -m window --display 2
+
+alt - h : yabai -m window --resize left:-50:0 ; yabai -m window --resize right:-50:0 
+alt - j : yabai -m window --resize bottom:0:50 ; yabai -m window --resize top:0:50 
+alt - k : yabai -m window --resize top:0:-50 ; yabai -m window --resize bottom:0:-50 
 alt - l : yabai -m window --resize right:50:0 ; yabai -m window --resize left:50:0
 
-cmd + alt - k : yabai -m window --swap north
-cmd + alt - l : yabai -m window --swap east
-cmd + alt - j : yabai -m window --swap south
-cmd + alt - h : yabai -m window --swap west
+cmd + shift - k : yabai -m window --swap north
+cmd + shift - l : yabai -m window --swap east
+cmd + shift - j : yabai -m window --swap south
+cmd + shift - h : yabai -m window --swap west
 
-hyper - h : yabai -m window --focus west
-hyper - j : yabai -m window --focus south
-hyper - k : yabai -m window --focus north
-hyper - l : yabai -m window --focus east
+cmd + alt + ctrl - h : yabai -m window --focus west
+cmd + alt + ctrl - j : yabai -m window --focus south
+cmd + alt + ctrl- k : yabai -m window --focus north
+cmd + alt + ctrl- l : yabai -m window --focus east
 
-cmd + shift - h : yabai -m window --warp west
-cmd + shift - j : yabai -m window --warp south
-cmd + shift - k : yabai -m window --warp north
-cmd + shift - l : yabai -m window --warp east
+hyper - h : yabai -m window --warp west #moves the window
+hyper - j : yabai -m window --warp south
+hyper - k : yabai -m window --warp north
+hyper - l : yabai -m window --warp east
 
-hyper - r : yabai -m space --rotate 90 #rotates the tree by 90 degrees
+cmd + alt + ctrl - r : yabai -m space --rotate 90 #rotates the tree by 90 degrees
+cmd + alt + ctrl - s : yabai -m window --toggle split
+cmd + alt + ctrl - z : yabai -m window --toggle native-fullscreen
+cmd + alt + ctrl - f : yabai -m window --toggle float;\
 
-hyper - s : yabai -m window --toggle split
-
-hyper - z : yabai -m window --toggle native-fullscreen
-
-hyper - f : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
-
-
+# Caps lock -> cmd + opt + crtl

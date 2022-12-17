@@ -1,4 +1,4 @@
-local dapui_setup, dapui = pcall(require, "dap")
+local dapui_setup, dapui = pcall(require, "dapui")
 if not dapui_setup then
 	return
 end
@@ -18,7 +18,7 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 	dapui.close()
 end
 
-require("dapui").setup({
+dapui.setup({
 	icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
 	mappings = {
 		-- Use a table to apply multiple mappings
