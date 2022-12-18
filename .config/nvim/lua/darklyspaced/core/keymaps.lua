@@ -2,7 +2,7 @@ vim.g.mapleader = " " --set leader to be space
 
 local keymap = vim.keymap
 
-keymap.set("n", "<leader>nh", ":nohl<CR>")
+keymap.set("n", "<Esc>", "<cmd>nohl<CR>")
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore

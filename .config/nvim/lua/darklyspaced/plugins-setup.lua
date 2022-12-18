@@ -89,6 +89,8 @@ return packer.startup(function(use)
 		end,
 	})
 
+	use("christoomey/vim-tmux-navigator")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
