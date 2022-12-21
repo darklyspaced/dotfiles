@@ -3,6 +3,11 @@ if not setup then
 	return
 end
 
+local prettier_setup, prettier = pcall(require, "prettier")
+if not prettier_setup then
+	return
+end
+
 local formatting = null_ls.builtins.formatting -- to setup formatters
 local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
@@ -14,10 +19,12 @@ null_ls.setup({
 	sources = {
 		--  to disable file types use
 		--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
-		diagnostics.cppcheck,
 		formatting.uncrustify,
 		formatting.stylua, -- lua formatter
 		diagnostics.pylint,
+		null_ls.builtins.code_actions.eslint_d,
+		diagnostics.clang_check,
+		formatting.rustfmt,
 	},
 	-- configure format on save
 	on_attach = function(current_client, bufnr)
@@ -38,4 +45,35 @@ null_ls.setup({
 			})
 		end
 	end,
+})
+
+prettier.setup({
+	bin = "prettier", -- or `'prettierd'` (v0.22+)
+	filetypes = {
+		"css",
+		"graphql",
+		"html",
+		"javascript",
+		"javascriptreact",
+		"json",
+		"less",
+		"markdown",
+		"scss",
+		"typescript",
+		"typescriptreact",
+		"yaml",
+	},
+	["null-ls"] = {
+		condition = function()
+			return prettier.config_exists({
+				-- if `false`, skips checking `package.json` for `"prettier"` key
+				check_package_json = true,
+			})
+		end,
+		runtime_condition = function(params)
+			-- return false to skip running prettier
+			return true
+		end,
+		timeout = 5000,
+	},
 })

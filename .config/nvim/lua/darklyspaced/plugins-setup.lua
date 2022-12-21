@@ -20,6 +20,7 @@ end
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim") --packer.nvim
 	use("sainnhe/gruvbox-material") --colourscheme
+	use("morhetz/gruvbox")
 
 	use("numToStr/Comment.nvim") --help commenting gc + motion / c to do curr line
 	use("nvim-lua/plenary.nvim") -- useful lua functions
@@ -73,8 +74,6 @@ return packer.startup(function(use)
 	-- auto closing
 	use("windwp/nvim-autopairs") -- autoclose parens, brackets, quotes, etc...
 	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }) -- autoclose tags
-
-	use("ggandor/leap.nvim") -- better vertical movement!
 
 	use("mfussenegger/nvim-dap") -- debugging
 	use("rcarriga/nvim-dap-ui") -- adds the ui for debugging
