@@ -1,7 +1,7 @@
 {
     "global": {
         "check_for_updates_on_startup": true,
-        "show_in_menu_bar": true,
+        "show_in_menu_bar": false,
         "show_profile_name_in_menu_bar": false
     },
     "profiles": [
@@ -45,7 +45,7 @@
                                 "type": "basic"
                             }
                         ]
-                    }
+                    },
                 ]
             },
             "devices": [
@@ -55,15 +55,15 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
-                        "product_id": 20525,
-                        "vendor_id": 12815
+                        "product_id": 834,
+                        "vendor_id": 1452
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
                             "from": {
-                                "key_code": "right_option"
+                                "key_code": "right_command"
                             },
                             "to": [
                                 {
@@ -73,7 +73,7 @@
                         },
                         {
                             "from": {
-                                "key_code": "right_command"
+                                "key_code": "right_option"
                             },
                             "to": [
                                 {
@@ -211,7 +211,28 @@
                 "delay_milliseconds_before_open_device": 1000
             },
             "selected": true,
-            "simple_modifications": [],
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "right_command"
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_option"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "right_option"
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_command"
+                        }
+                    ]
+                }
+            ],
             "virtual_hid_keyboard": {
                 "country_code": 0,
                 "indicate_sticky_modifier_keys_state": true,
