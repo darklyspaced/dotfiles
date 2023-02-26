@@ -96,6 +96,7 @@ return {
                 -- Add clippy lints for Rust.
                 checkOnSave = {
                   command = "clippy",
+                  enable = "true",
                 },
                 procMacro = {
                   enable = true,

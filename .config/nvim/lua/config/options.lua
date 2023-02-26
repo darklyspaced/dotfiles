@@ -3,4 +3,5 @@
 -- Add any additional options here
 --
 local opt = vim.opt
-opt.directory = ".cache//"
+opt.clipboard = ""
+opt.directory = ".cache/"

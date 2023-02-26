@@ -6,9 +6,9 @@ vim.opt.expandtab = true
 return {
   -- colourscheme setup
   {
-    "morhetz/gruvbox",
-    lazy = false,
-    priority = 1000,
+    "folke/tokyonight.nvim",
+    lazy = true,
+    opts = { style = "night" },
   },
 
   {
@@ -20,6 +20,11 @@ return {
 
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
+  },
+
+  {
+    "echasnovski/mini.indentscope",
     enabled = false,
   },
 
@@ -53,22 +58,8 @@ return {
   },
 
   {
-    "Pocco81/auto-save.nvim",
-    event = "InsertEnter",
-    opts = function()
-      return {
-        require("auto-save").setup({
-          debounce_delay = 1000,
-          execution_message = {
-            message = function() -- message to print on save
-              return ("Saved at:" .. vim.fn.strftime("%H:%M:%S"))
-            end,
-            dim = 0.18, -- dim the color of `message`
-            cleaning_interval = 1, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
-          },
-        }),
-      }
-    end,
+    "christoomey/vim-tmux-navigator",
+    event = "VeryLazy",
   },
 
   {
@@ -77,8 +68,8 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
         clangd = {},
+        pyright = {},
       },
     },
   },
