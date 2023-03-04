@@ -1,0 +1,24 @@
+{
+  "$schema" : "https:\/\/app.linearmouse.org\/schema\/0.7.5",
+  "schemes" : [
+    {
+      "pointer" : {
+        "acceleration" : 0.875,
+        "speed" : 0.0689655172413792768,
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "productName" : "MX Anywhere 3 Mac",
+          "serialNumber" : "E92BA42FDF36C24A",
+          "productID" : "0xb025",
+          "category" : "mouse",
+          "vendorID" : "0x46d"
+        }
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      }
+    }
+  ]
+}
