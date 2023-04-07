@@ -5,6 +5,9 @@ vim.opt.expandtab = true
 
 return {
     -- colourscheme setup
+    -- { "ellisonleao/gruvbox.nvim" },
+    { "echasnovski/mini.nvim", version = "*", event = "VeryLazy" },
+
     {
         "folke/tokyonight.nvim",
         lazy = true,
@@ -22,10 +25,58 @@ return {
         "nvim-neo-tree/neo-tree.nvim",
         enabled = false,
     },
+    {
+        "rafamadriz/friendly-snippets",
+        enabled = false,
+    },
 
     {
         "echasnovski/mini.indentscope",
         enabled = false,
+    },
+
+    {
+        "akinsho/bufferline.nvim",
+        enabled = false,
+    },
+    {
+        "goolord/alpha-nvim",
+        enabled = false,
+    },
+    {
+
+        "lukas-reineke/indent-blankline.nvim",
+        enabled = false,
+    },
+
+    {
+        "telescope.nvim",
+        dependencies = {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            config = function()
+                require("telescope").load_extension("fzf")
+            end,
+        },
+    },
+
+    {
+        "echasnovski/mini.surround",
+        opts = {
+            mappings = {
+                add = "gsa",
+                delete = "gsd",
+                find = "gsf",
+                find_left = "gsF",
+                highlight = "gsh",
+                replace = "gsr",
+                update_n_lines = "gsn",
+            },
+        },
+    },
+    {
+        "ThePrimeagen/harpoon",
+        event = "VeryLazy",
     },
 
     {
@@ -60,6 +111,16 @@ return {
     {
         "christoomey/vim-tmux-navigator",
         event = "VeryLazy",
+    },
+
+    {
+        "echasnovski/mini.pairs",
+        enabled = false,
+    },
+
+    {
+        "folke/which-key.nvim",
+        enabled = false,
     },
 
     {
