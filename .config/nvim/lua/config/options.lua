@@ -5,6 +5,7 @@
 local opt = vim.opt
 opt.clipboard = ""
 opt.directory = ".cache/"
+vim.cmd([[cabbrev W w]])
 
 local function tab_win_closed(winnr)
     local api = require("nvim-tree.api")

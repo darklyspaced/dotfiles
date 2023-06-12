@@ -79,7 +79,7 @@ return {
                         },
                         tools = {
                             hover_actions = {
-                                auto_focus = true,
+                                auto_focus = false,
                             },
                             inlay_hints = {
                                 auto = true,
@@ -116,10 +116,10 @@ return {
                         end
                     end
                     require("lazyvim.util").on_attach(function(client, buffer)
-            -- stylua: ignore
-            if client.name == "taplo" then
-              vim.keymap.set("n", "K", show_documentation, { buffer = buffer })
-            end
+                        -- stylua: ignore
+                        if client.name == "taplo" then
+                            vim.keymap.set("n", "K", show_documentation, { buffer = buffer })
+                        end
                     end)
                     return false -- make sure the base implementation calls taplo.setup
                 end,

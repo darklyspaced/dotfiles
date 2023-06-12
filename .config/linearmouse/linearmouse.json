@@ -17,7 +17,21 @@
         }
       },
       "buttons" : {
-        "universalBackForward" : true
+        "universalBackForward" : false
+      }
+    },
+    {
+      "pointer" : {
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "productName" : "MX Master 3",
+          "serialNumber" : "CAA425F69DA0E378",
+          "productID" : "0xb023",
+          "category" : "mouse",
+          "vendorID" : "0x46d"
+        }
       }
     }
   ]

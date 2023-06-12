@@ -40,6 +40,10 @@ return {
         enabled = false,
     },
     {
+        "ggandor/flit.nvim",
+        enabled = false,
+    },
+    {
         "goolord/alpha-nvim",
         enabled = false,
     },
