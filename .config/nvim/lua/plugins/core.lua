@@ -4,16 +4,52 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 return {
-    -- colourscheme setup
-    -- { "ellisonleao/gruvbox.nvim" },
     { "echasnovski/mini.nvim", version = "*", event = "VeryLazy" },
+    { "ThePrimeagen/vim-be-good", version = "*", event = "VeryLazy" },
 
+    -- colourscheme setup
     {
         "folke/tokyonight.nvim",
         lazy = true,
         opts = { style = "night" },
     },
-
+    {
+        "catppuccin/nvim",
+        lazy = true,
+        enabled = false,
+        name = "catppuccin",
+        opts = {
+            flavour = "macchiato",
+            integrations = {
+                alpha = true,
+                cmp = true,
+                gitsigns = true,
+                illuminate = true,
+                indent_blankline = { enabled = true },
+                lsp_trouble = true,
+                mason = true,
+                mini = true,
+                native_lsp = {
+                    enabled = true,
+                    underlines = {
+                        errors = { "undercurl" },
+                        hints = { "undercurl" },
+                        warnings = { "undercurl" },
+                        information = { "undercurl" },
+                    },
+                },
+                navic = { enabled = true, custom_bg = "lualine" },
+                neotest = true,
+                noice = true,
+                notify = true,
+                neotree = true,
+                semantic_tokens = true,
+                telescope = true,
+                treesitter = true,
+                which_key = true,
+            },
+        },
+    },
     {
         "LazyVim/LazyVim",
         opts = {
@@ -21,38 +57,7 @@ return {
         },
     },
 
-    {
-        "nvim-neo-tree/neo-tree.nvim",
-        enabled = false,
-    },
-    {
-        "rafamadriz/friendly-snippets",
-        enabled = false,
-    },
-
-    {
-        "echasnovski/mini.indentscope",
-        enabled = false,
-    },
-
-    {
-        "akinsho/bufferline.nvim",
-        enabled = false,
-    },
-    {
-        "ggandor/flit.nvim",
-        enabled = false,
-    },
-    {
-        "goolord/alpha-nvim",
-        enabled = false,
-    },
-    {
-
-        "lukas-reineke/indent-blankline.nvim",
-        enabled = false,
-    },
-
+    -- add fuzzy finding to telescope
     {
         "telescope.nvim",
         dependencies = {
@@ -64,80 +69,61 @@ return {
         },
     },
 
-    {
-        "echasnovski/mini.surround",
-        opts = {
-            mappings = {
-                add = "gsa",
-                delete = "gsd",
-                find = "gsf",
-                find_left = "gsF",
-                highlight = "gsh",
-                replace = "gsr",
-                update_n_lines = "gsn",
-            },
-        },
-    },
+    -- quick jumping between common files
     {
         "ThePrimeagen/harpoon",
         event = "VeryLazy",
     },
 
+    -- project specific config for LSP
     {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
+        "folke/neoconf.nvim",
         event = "VeryLazy",
-        opts = function()
-            return {
-                require("nvim-tree").setup({
-                    sort_by = "case_sensitive",
-                    view = {
-                        adaptive_size = true,
-                        mappings = {
-                            list = {
-                                { key = "u", action = "dir_up" },
-                            },
-                        },
-                    },
-                    renderer = {
-                        group_empty = true,
-                    },
-                    filters = {
-                        dotfiles = true,
-                    },
-                }),
-            }
-        end,
     },
 
+    -- intergration between tmux panes and vim buffers
     {
         "christoomey/vim-tmux-navigator",
         event = "VeryLazy",
     },
 
+    -- disable useless plugins
+    { "folke/trouble.nvim", enabled = false },
+    {
+        "echasnovski/mini.indentscope",
+        enabled = false,
+    },
+    {
+        "ggandor/leap.nvim",
+        enabled = false,
+    },
+    {
+        "ggandor/flit.nvim",
+        enabled = false,
+    },
+    {
+        "akinsho/bufferline.nvim",
+        enabled = false,
+    },
+    {
+        "goolord/alpha-nvim",
+        enabled = false,
+    },
     {
         "echasnovski/mini.pairs",
         enabled = false,
     },
-
     {
         "folke/which-key.nvim",
         enabled = false,
     },
-
     {
-        "neovim/nvim-lspconfig",
-        ---@class PluginLspOpts
-        opts = {
-            ---@type lspconfig.options
-            servers = {
-                clangd = {},
-                pyright = {},
-            },
-        },
+
+        "lukas-reineke/indent-blankline.nvim",
+        enabled = false,
     },
 
+    { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
+    { import = "plugins" },
 }

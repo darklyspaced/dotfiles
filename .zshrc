@@ -110,7 +110,7 @@ if [ -f '/Users/rohan/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '
 
 alias dev="cd /Users/rohan/Documents/Macbook/Development/"
 alias -g cd="z"
-alias -g ls="exa --long --git --icons --group-directories-first"
+alias -g ls="exa --long --icons --no-time --no-user --group-directories-first --sort=extension --color-scale"
 alias -g vim="nvim"
 
 HB_CNF_HANDLER="$(brew --repository)/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
@@ -119,3 +119,5 @@ source "$HB_CNF_HANDLER";
 fi
 export GPG_TTY=$(tty)
 eval "$(starship init zsh)"
+
+[ -f "/Users/rohan/.ghcup/env" ] && source "/Users/rohan/.ghcup/env" # ghcup-env
