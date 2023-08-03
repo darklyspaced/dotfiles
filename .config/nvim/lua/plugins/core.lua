@@ -1,129 +1,36 @@
-vim.opt.autoindent = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-
 return {
-    { "echasnovski/mini.nvim", version = "*", event = "VeryLazy" },
-    { "ThePrimeagen/vim-be-good", version = "*", event = "VeryLazy" },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			styles = {
+				sidebars = "transparent",
+				floats = "transparent",
+			},
+		},
+		config = function()
+			vim.cmd([[colorscheme tokyonight-night]])
+		end,
+	},
+	{
+		"echasnovski/mini.comment",
+		version = false,
+		opts = {
+			mappings = {
+				-- Toggle comment (like `gcip` - comment inner paragraph) for both
+				-- Normal and Visual modes
+				comment = "gc",
 
-    -- colourscheme setup
-    {
-        "folke/tokyonight.nvim",
-        lazy = true,
-        opts = { style = "night" },
-    },
-    {
-        "catppuccin/nvim",
-        lazy = true,
-        enabled = false,
-        name = "catppuccin",
-        opts = {
-            flavour = "macchiato",
-            integrations = {
-                alpha = true,
-                cmp = true,
-                gitsigns = true,
-                illuminate = true,
-                indent_blankline = { enabled = true },
-                lsp_trouble = true,
-                mason = true,
-                mini = true,
-                native_lsp = {
-                    enabled = true,
-                    underlines = {
-                        errors = { "undercurl" },
-                        hints = { "undercurl" },
-                        warnings = { "undercurl" },
-                        information = { "undercurl" },
-                    },
-                },
-                navic = { enabled = true, custom_bg = "lualine" },
-                neotest = true,
-                noice = true,
-                notify = true,
-                neotree = true,
-                semantic_tokens = true,
-                telescope = true,
-                treesitter = true,
-                which_key = true,
-            },
-        },
-    },
-    {
-        "LazyVim/LazyVim",
-        opts = {
-            colorscheme = "tokyonight",
-        },
-    },
+				-- Toggle comment on current line
+				comment_line = "gcc",
 
-    -- add fuzzy finding to telescope
-    {
-        "telescope.nvim",
-        dependencies = {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-            config = function()
-                require("telescope").load_extension("fzf")
-            end,
-        },
-    },
-
-    -- quick jumping between common files
-    {
-        "ThePrimeagen/harpoon",
-        event = "VeryLazy",
-    },
-
-    -- project specific config for LSP
-    {
-        "folke/neoconf.nvim",
-        event = "VeryLazy",
-    },
-
-    -- intergration between tmux panes and vim buffers
-    {
-        "christoomey/vim-tmux-navigator",
-        event = "VeryLazy",
-    },
-
-    -- disable useless plugins
-    { "folke/trouble.nvim", enabled = false },
-    {
-        "echasnovski/mini.indentscope",
-        enabled = false,
-    },
-    {
-        "ggandor/leap.nvim",
-        enabled = false,
-    },
-    {
-        "ggandor/flit.nvim",
-        enabled = false,
-    },
-    {
-        "akinsho/bufferline.nvim",
-        enabled = false,
-    },
-    {
-        "goolord/alpha-nvim",
-        enabled = false,
-    },
-    {
-        "echasnovski/mini.pairs",
-        enabled = false,
-    },
-    {
-        "folke/which-key.nvim",
-        enabled = false,
-    },
-    {
-
-        "lukas-reineke/indent-blankline.nvim",
-        enabled = false,
-    },
-
-    { import = "lazyvim.plugins.extras.lang.clangd" },
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    { import = "plugins" },
+				-- Define 'comment' textobject (like `dgc` - delete whole comment block)
+				textobject = "gc",
+			},
+		},
+		config = function(opts)
+			require("mini.comment").setup()
+		end,
+	},
 }

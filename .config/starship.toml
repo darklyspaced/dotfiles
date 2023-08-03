@@ -13,7 +13,7 @@ truncation_length = 4
 truncation_symbol = ''
 
 [rust]
-format = 'via [⚙️ $version](red bold)'
+format = 'via [⚙️ $version](red bold) '
 
 [package]
 format = 'is [📦 $version](208 bold) '
