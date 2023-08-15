@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# add my custom shell scripts to path
+export PATH="$HOME/bin:$PATH"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -108,7 +111,7 @@ if [ -f '/Users/rohan/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/rohan/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rohan/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-alias dev="cd /Users/rohan/Documents/Macbook/Development/"
+alias -g cat="bat"
 alias -g cd="z"
 alias -g ls="exa --long --icons --no-time --no-user --group-directories-first --sort=extension --color-scale"
 alias -g vim="nvim"

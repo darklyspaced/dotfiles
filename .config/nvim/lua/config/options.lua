@@ -12,10 +12,6 @@ opt.expandtab = true
 opt.rnu = true
 opt.nu = true
 
--- just not needed
-opt.swapfile = false
-opt.backup = false
-
 -- no line wrapping pls
 opt.wrap = false
 
@@ -24,7 +20,8 @@ opt.incsearch = true
 
 opt.scrolloff = 12
 
--- faster is just better. usually.
-opt.updatetime = 50
-
 opt.undofile = true
+
+local home = os.getenv("HOME")
+local swapDirectory = home .. "/.local/share/nvim/swap//"
+vim.o.directory = swapDirectory
