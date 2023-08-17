@@ -1,33 +1,110 @@
 return {
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		lazy = true,
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
+			{ "folke/neodev.nvim", opts = {} },
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"hrsh7th/cmp-nvim-lsp",
+		},
+	},
+	{
+		"williamboman/mason.nvim",
 		config = function()
-			require("lsp-zero.settings").preset("recommended")
+			require("mason").setup()
 		end,
 	},
-
-	-- Autocompletion
 	{
-		"hrsh7th/nvim-cmp",
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"williamboman/mason.nvim",
+			"simrat39/rust-tools.nvim",
+		},
+		opts = {
+			ensure_installed = {
+				"rust_analyzer",
+				"lua_ls",
+				"hls",
+			},
+		},
+		config = function(_, opts)
+			require("mason-lspconfig").setup(opts)
+
+			local lspconfig = require("lspconfig")
+			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+			require("mason-lspconfig").setup_handlers({
+				function(server_name)
+					lspconfig[server_name].setup({
+						capabilites = lsp_capabilities,
+					})
+				end,
+
+				-- override rust-analyzer setup to delegate it to rust-tools
+				["rust_analyzer"] = function()
+					require("rust-tools").setup({})
+				end,
+			})
+		end,
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp",
 		event = "InsertEnter",
 		dependencies = {
 			{ "L3MON4D3/LuaSnip" },
 		},
-
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp",
+		},
 		config = function()
-			require("lsp-zero.cmp").extend()
+			local has_words_before = function()
+				unpack = unpack or table.unpack
+				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+				return col ~= 0
+					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+			end
 
 			local cmp = require("cmp")
-			local cmp_action = require("lsp-zero").cmp_action()
+			local luasnip = require("luasnip")
 			vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
 			cmp.setup({
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
+					end,
+				},
 				mapping = {
 					["<CR>"] = cmp.mapping.confirm({ select = false }),
-					["<Tab>"] = cmp_action.luasnip_supertab(),
-					["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						elseif has_words_before() then
+							cmp.complete()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 				},
 				preselect = "item",
 				completion = {
@@ -59,43 +136,25 @@ return {
 								and (require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind())
 						end,
 					},
+					{
+						name = "path",
+					},
+					{ name = "crates" },
 				}),
 			})
 		end,
 	},
-
-	-- LSP
 	{
-		"neovim/nvim-lspconfig",
-		cmd = "LspInfo",
-		version = false,
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "williamboman/mason-lspconfig.nvim" },
-			{ "williamboman/mason.nvim" },
-			{ "simrat39/rust-tools.nvim" },
-			{ "folke/neoconf.nvim" },
-		},
+		"jose-elias-alvarez/null-ls.nvim",
 		config = function()
-			local lsp = require("lsp-zero")
-			lsp.on_attach(function(_, bufnr)
-				-- see :help lsp-zero-keybindings for keybindings
-				lsp.default_keymaps({ buffer = bufnr })
-			end)
-
-			lsp.skip_server_setup({ "rust_analyzer", "hls", "jdtls" })
-
-			require("neoconf").setup({})
-			require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
-
-			lsp.setup()
-
-			--setup null-ls
 			local null_ls = require("null-ls")
-			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-			null_ls.setup({
+			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+			require("null-ls").setup({
+				sources = {
+					null_ls.builtins.formatting.stylua,
+					null_ls.builtins.formatting.rustfmt,
+				},
 				on_attach = function(client, bufnr)
 					if client.supports_method("textDocument/formatting") then
 						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -103,93 +162,12 @@ return {
 							group = augroup,
 							buffer = bufnr,
 							callback = function()
-								-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-								-- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
 								vim.lsp.buf.format({ async = false })
 							end,
 						})
 					end
 				end,
-				sources = {
-					-- Replace these with the tools you have installed
-					-- make sure the source name is supported by null-ls
-					-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-					null_ls.builtins.formatting.rustfmt,
-					null_ls.builtins.formatting.stylua,
-				},
-			})
-
-			local haskell_tools = require("haskell-tools")
-			local hls_lsp = require("lsp-zero").build_options("hls", {})
-
-			local hls_config = {
-				hls = {
-					capabilities = hls_lsp.capabilities,
-					on_attach = function(client, bufnr)
-						local opts = { buffer = bufnr }
-
-						-- haskell-language-server relies heavily on codeLenses,
-						-- so auto-refresh (see advanced configuration) is enabled by default
-						vim.keymap.set("n", "<leader>ca", vim.lsp.codelens.run, opts)
-						vim.keymap.set("n", "<leader>hs", haskell_tools.hoogle.hoogle_signature, opts)
-						vim.keymap.set("n", "<leader>ea", haskell_tools.lsp.buf_eval_all, opts)
-					end,
-				},
-			}
-
-			-- Autocmd that will actually be in charging of starting hls
-			local hls_augroup = vim.api.nvim_create_augroup("haskell-lsp", { clear = true })
-			vim.api.nvim_create_autocmd("FileType", {
-				group = hls_augroup,
-				pattern = { "haskell" },
-				callback = function()
-					haskell_tools.start_or_attach(hls_config)
-
-					---
-					-- Suggested keymaps that do not depend on haskell-language-server:
-					---
-
-					-- Toggle a GHCi repl for the current package
-					vim.keymap.set("n", "<leader>rr", haskell_tools.repl.toggle, opts)
-
-					-- Toggle a GHCi repl for the current buffer
-					vim.keymap.set("n", "<leader>rf", function()
-						haskell_tools.repl.toggle(vim.api.nvim_buf_get_name(0))
-					end, def_opts)
-
-					vim.keymap.set("n", "<leader>rq", haskell_tools.repl.quit, opts)
-				end,
-			})
-
-			-- setup rust-tools
-			local rt = require("rust-tools")
-			-- setup options don't work for some unknown reason :(
-			rt.setup({
-				server = {
-					on_attach = function(_, bufnr)
-						-- Hover actions
-						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-						-- Code action groups
-						vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-					end,
-				},
 			})
 		end,
-	},
-	{
-		"MrcJkb/haskell-tools.nvim",
-		lazy = true,
-	},
-	{
-		"simrat39/rust-tools.nvim",
-		lazy = true,
-	},
-	{
-		"folke/neoconf.nvim",
-		lazy = true,
-	},
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		lazy = true,
 	},
 }

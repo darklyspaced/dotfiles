@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>di", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
-vim.keymap.set("n", "<leader>wq", vim.cmd.wq)
+vim.keymap.set("n", "<leader>ww", vim.cmd.wq)
 
 local modes = { "n", "v", "x", "s", "o", "t" }
 for _, mode in ipairs(modes) do
@@ -26,3 +26,6 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
