@@ -26,12 +26,14 @@ return {
 		opts = {
 			ensure_installed = {
 				"rust_analyzer",
-				"lua_ls",
 				"hls",
+				"lua_ls",
+				"jdtls",
 			},
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
+			print("testing")
 
 			local lspconfig = require("lspconfig")
 			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -45,6 +47,7 @@ return {
 
 				-- override rust-analyzer setup to delegate it to rust-tools
 				["rust_analyzer"] = function()
+					print("testing!")
 					require("rust-tools").setup({})
 				end,
 			})
