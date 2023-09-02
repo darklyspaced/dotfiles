@@ -29,3 +29,5 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+
+vim.keymap.set("n", "cr", vim.lsp.buf.rename)
