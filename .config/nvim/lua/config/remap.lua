@@ -5,8 +5,8 @@ vim.keymap.set("n", "<leader>ww", vim.cmd.wq)
 
 local modes = { "n", "v", "x", "s", "o", "t" }
 for _, mode in ipairs(modes) do
-	vim.api.nvim_set_keymap(mode, "H", "^", { noremap = true, silent = true })
-	vim.api.nvim_set_keymap(mode, "L", "$", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap(mode, "H", "^", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap(mode, "L", "$", { noremap = true, silent = true })
 end
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -31,3 +31,5 @@ vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 
 vim.keymap.set("n", "cr", vim.lsp.buf.rename)
+
+vim.keymap.set("i", "<M-h>", "<C-o>db")
