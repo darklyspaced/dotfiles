@@ -24,6 +24,7 @@
         "/Users/rohan/.local/share/nvim/lazy/neodev.nvim/lua",
         "/Users/rohan/.local/share/nvim/lazy/nvim-notify/lua",
         "/Users/rohan/.config/nvim/lua",
-        "${3rd}/luv/library"
+        "${3rd}/luv/library",
+        "${3rd}/luassert/library"
     ]
 }

@@ -1,30 +1,36 @@
 return {
     {
-        "nvim-telescope/telescope.nvim", tag = "0.1.2",
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.2",
         version = false,
         dependencies = {
             "nvim-lua/plenary.nvim",
-            'nvim-tree/nvim-web-devicons',
+            "nvim-tree/nvim-web-devicons",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",
                 config = function()
                     require("telescope").load_extension("fzf")
                 end,
-            }
+            },
         },
         keys = {
             -- if in a git dir, search the git files; otherwise just cwd
-            { "<leader><space>", function()
-                local scope
-                if vim.loop.fs_stat(vim.loop.cwd() .. "/.git") then
-                    scope = "git_files"
-                else
-                    scope = "find_files"
-                end
-                require("telescope.builtin")[scope]()
-            end, desc = "Find Files" },
-            {"<leader>sg", ":Telescope live_grep<CR>"}
+            {
+                "<leader><space>",
+                function()
+                    local scope
+                    if vim.loop.fs_stat(vim.loop.cwd() .. "/.git") then
+                        scope = "git_files"
+                    else
+                        scope = "find_files"
+                    end
+                    require("telescope.builtin")[scope]()
+                end,
+                desc = "Find Files",
+            },
+            { "<leader>sg", ":Telescope live_grep<CR>" },
+            { "<leader>b",  ":Telescope buffers<CR>" },
         },
         opts = {
             defaults = {
@@ -54,11 +60,11 @@ return {
             },
             extensions = {
                 fzf = {
-                    fuzzy = true,                    -- false will only do exact matching
-                    override_generic_sorter = true,  -- override the generic sorter
-                    override_file_sorter = true,     -- override the file sorter
-                }
-            }
+                    fuzzy = true,    -- false will only do exact matching
+                    override_generic_sorter = true, -- override the generic sorter
+                    override_file_sorter = true, -- override the file sorter
+                },
+            },
         },
     },
 }

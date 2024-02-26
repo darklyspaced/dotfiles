@@ -104,6 +104,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+# opam configuration
+[[ ! -r /Users/rohan/.opam/opam-init/init.zsh ]] || source /Users/rohan/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/rohan/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/rohan/Downloads/google-cloud-sdk/path.zsh.inc'; fi

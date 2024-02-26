@@ -21,7 +21,6 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "williamboman/mason.nvim",
-            "simrat39/rust-tools.nvim",
         },
         opts = {
             ensure_installed = {
@@ -29,6 +28,9 @@ return {
                 "hls",
                 "lua_ls",
                 "jdtls",
+                "pyright",
+                "clangd",
+                "gopls",
             },
         },
         config = function(_, opts)
@@ -45,9 +47,7 @@ return {
                 end,
 
                 -- override rust-analyzer setup to delegate it to rust-tools
-                ["rust_analyzer"] = function()
-                    require("rust-tools").setup({})
-                end,
+                ["rust_analyzer"] = function() end,
             })
         end,
     },
@@ -155,6 +155,7 @@ return {
                 sources = {
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.rustfmt,
+                    null_ls.builtins.formatting.clang_format,
                 },
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then

@@ -1,8 +1,5 @@
 return {
-	{
-		"simrat39/rust-tools.nvim",
-		dependencies = {
-			"Saecki/crates.nvim",
-		},
-	},
+    "mrcjkb/rustaceanvim",
+    version = "^3", -- Recommended
+    ft = { "rust" },
 }

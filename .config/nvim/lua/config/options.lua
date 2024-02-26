@@ -22,6 +22,13 @@ opt.scrolloff = 12
 
 opt.undofile = true
 
+opt.autowriteall = true
+opt.foldenable = false
+
+vim.diagnostic.config({
+    float = { border = "rounded" },
+})
+
 local home = os.getenv("HOME")
 local swapDirectory = home .. "/.local/share/nvim/swap//"
 vim.o.directory = swapDirectory
