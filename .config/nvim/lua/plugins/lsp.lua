@@ -24,7 +24,6 @@ return {
         },
         opts = {
             ensure_installed = {
-                "rust_analyzer",
                 "hls",
                 "lua_ls",
                 "jdtls",
@@ -45,9 +44,6 @@ return {
                         capabilites = lsp_capabilities,
                     })
                 end,
-
-                -- override rust-analyzer setup to delegate it to rust-tools
-                ["rust_analyzer"] = function() end,
             })
         end,
     },
