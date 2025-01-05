@@ -7,7 +7,6 @@ return {
 			{ "folke/neodev.nvim", opts = {} },
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
 		},
 	},
 	{
@@ -19,8 +18,8 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
 			"williamboman/mason.nvim",
+			"saghen/blink.cmp",
 		},
 		opts = {
 			ensure_installed = {
@@ -36,7 +35,7 @@ return {
 			require("mason-lspconfig").setup(opts)
 
 			local lspconfig = require("lspconfig")
-			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			require("mason-lspconfig").setup_handlers({
 				function(server_name)
@@ -48,98 +47,32 @@ return {
 		end,
 	},
 	{
-		"hrsh7th/cmp-nvim-lsp",
-		event = "InsertEnter",
-		dependencies = {
-			{ "L3MON4D3/LuaSnip" },
-		},
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		config = function()
-			local has_words_before = function()
-				unpack = unpack or table.unpack
-				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0
-					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-			end
+		"saghen/blink.cmp",
 
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-			vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+		version = "*",
 
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
+		opts = {
+			keymap = { preset = "enter" },
+
+			appearance = {
+				use_nvim_cmp_as_default = true,
+				nerd_font_variant = "normal",
+			},
+
+			completion = {
+				list = {
+					selection = function(ctx)
+						-- force you to select a completion first on cmdline
+						return ctx.mode == "cmdline" and "auto_insert" or "preselect"
 					end,
 				},
-				mapping = {
-					["<CR>"] = cmp.mapping.confirm({ select = false }),
-					["<Down>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						elseif luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						elseif has_words_before() then
-							cmp.complete()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
+			},
 
-					["<Up>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						elseif luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				},
-				preselect = "item",
-				completion = {
-					completeopt = "menu,menuone,noinsert",
-				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				experimental = {
-					ghost_text = {
-						hl_group = "CmpGhostText",
-					},
-				},
-				formatting = {
-					fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind },
-					-- its always [LSP] smh
-					format = function(_, item)
-						item.menu = nil
-						return item
-					end,
-				},
-				sources = cmp.config.sources({
-					-- don't suggest text and snippets cause its just clutter
-					{
-						name = "nvim_lsp",
-						entry_filter = function(entry, _)
-							return (require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind())
-								and (require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind())
-						end,
-					},
-					{
-						name = "path",
-					},
-					{ name = "crates" },
-				}),
-			})
-		end,
+			sources = {
+				default = { "lsp", "path" },
+			},
+		},
+		opts_extend = { "sources.default" },
 	},
 	{
 		"stevearc/conform.nvim",
