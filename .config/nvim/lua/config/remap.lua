@@ -4,8 +4,8 @@ vim.keymap.set("n", "<leader>w", vim.cmd.w)
 
 local modes = { "n", "v", "x", "s", "o", "t" }
 for _, mode in ipairs(modes) do
-    vim.api.nvim_set_keymap(mode, "H", "^", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap(mode, "L", "$", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap(mode, "H", "^", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap(mode, "L", "$", { noremap = true, silent = true })
 end
 
 vim.keymap.set("v", "J", "<cmd>m '>+1<CR>gv=gv")
@@ -19,7 +19,7 @@ vim.keymap.set("v", "<leader>y", '"+y')
 
 vim.keymap.set("n", "q:", "<nop>")
 
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- allows escape to be used in terminal
 
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-h>", "<C-w>h")
@@ -31,8 +31,12 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 
 vim.keymap.set("n", "<leader>i", vim.diagnostic.open_float) -- i for inspect
 vim.keymap.set("n", "cr", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>q", "<cmd>RustLsp codeAction<CR>") -- q for qualify (what i usually use code actions for)
 
-vim.keymap.set("i", "<M-h>", "<C-o>db")
+vim.keymap.set("i", "<M-BS>", "<C-w>") -- allows option backspace to remove last work in insert mode
+
+vim.keymap.set("n", "<leader>o", "moo<Esc>`o")
+vim.keymap.set("n", "<leader>O", "moO<Esc>`o")
 
 vim.cmd([[command W w]])
 vim.cmd([[ca q q!]])

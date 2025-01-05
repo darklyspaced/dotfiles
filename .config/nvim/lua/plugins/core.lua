@@ -15,15 +15,4 @@ return {
             vim.cmd([[colorscheme gruvbox]])
         end,
     },
-    {
-        "echasnovski/mini.comment",
-        version = false,
-        opts = {
-            mappings = {
-                comment = "gc",
-                comment_line = "gcc",
-                textobject = "gc",
-            },
-        },
-    },
 }

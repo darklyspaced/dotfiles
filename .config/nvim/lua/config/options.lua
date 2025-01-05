@@ -18,7 +18,7 @@ opt.wrap = false
 opt.hlsearch = false
 opt.incsearch = true
 
-opt.scrolloff = 12
+-- opt.scrolloff = 12
 
 opt.undofile = true
 
@@ -26,7 +26,7 @@ opt.autowriteall = true
 opt.foldenable = false
 
 vim.diagnostic.config({
-    float = { border = "rounded" },
+	float = { border = "rounded" },
 })
 
 local home = os.getenv("HOME")

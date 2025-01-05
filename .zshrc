@@ -115,8 +115,6 @@ if [ -f '/Users/rohan/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 if [ -f '/Users/rohan/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/rohan/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 alias -g cd="z"
-alias -g ls="exa --long --icons --no-time --no-user --group-directories-first --sort=extension --color-scale"
-alias -g python="python3"
 
 HB_CNF_HANDLER="$(brew --repository)/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
 if [ -f "$HB_CNF_HANDLER" ]; then
