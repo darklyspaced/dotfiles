@@ -1,0 +1,31 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = darklyspaced
+	email = srohanjd@gmail.com
+[commit]
+	gpgsign = false
+[gpg]
+	format = ssh
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
+[diff]
+        tool = difftastic
+
+[difftool]
+        prompt = false
+
+[difftool "difftastic"]
+        cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+        difftool = true
